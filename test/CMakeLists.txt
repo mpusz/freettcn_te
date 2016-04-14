@@ -20,21 +20,21 @@ set(SOURCE_FILES test_te.cpp)
 get_target_property(TE_INCLUDES te INCLUDE_DIRECTORIES)
 include_directories(${TE_INCLUDES})
 
-add_executable(tests ${SOURCE_FILES})
-set_property(TARGET tests PROPERTY CXX_STANDARD 14)
-target_link_libraries(tests te)
+add_executable(unit_tests ${SOURCE_FILES})
+set_property(TARGET unit_tests PROPERTY CXX_STANDARD 14)
+target_link_libraries(unit_tests te)
 
 # import and add gtest
 enable_testing()
 
 find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
-target_link_libraries(tests ${GTEST_BOTH_LIBRARIES})
+target_link_libraries(unit_tests ${GTEST_BOTH_LIBRARIES})
 
 if(CMAKE_COMPILER_IS_GNUCXX)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
-target_link_libraries(tests Threads::Threads)
+target_link_libraries(unit_tests Threads::Threads)
 endif()
 
-add_test(AllTests tests)
+add_test(AllTests unit_tests)
