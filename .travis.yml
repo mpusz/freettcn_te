@@ -27,6 +27,12 @@ install:
   - "cd /usr/src/gtest && sudo cmake . && sudo cmake --build . && sudo mv libg* /usr/local/lib/ ; cd -"
 
   ############################################################################
+  # All the dependencies are installed in ${TRAVIS_BUILD_DIR}/deps/
+  ############################################################################
+  - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
+  - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
+
+  ############################################################################
   # Install a recent CMake
   ############################################################################
   - |
@@ -44,7 +50,7 @@ before_script:
   # Setup the build directory
   ############################################################################
   - cd ${TRAVIS_BUILD_DIR}
-  - (mkdir build && cd build && cmake .. -DCMAKE_CXX_COMPILER=${COMPILER} ${CMAKE_OPTIONS})
+  - mkdir build && cd build && cmake .. -DCMAKE_CXX_COMPILER=${COMPILER}
 
 script:
   - cmake --build .
