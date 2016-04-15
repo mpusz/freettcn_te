@@ -62,11 +62,15 @@ before_script:
   - mkdir build && cd build && cmake -DCMAKE_C_COMPILER=${C_COMPILER} -DCMAKE_CXX_COMPILER=${CXX_COMPILER} ${CMAKE_CODECOV} ..
 
 script:
-  - cmake --build .
+#  - cmake --build .
+  - make VERBOSE=1
   - |
     if [[ "${UNIT_TESTS}" == "true" ]]; then
       test/unit_tests
     fi
 
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  - |
+    if [[ "${CODECOV}" == "true" ]]; then
+      bash <(curl -s https://codecov.io/bash)
+    fi
