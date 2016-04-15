@@ -24,17 +24,14 @@ add_executable(unit_tests ${SOURCE_FILES})
 set_property(TARGET unit_tests PROPERTY CXX_STANDARD 14)
 target_link_libraries(unit_tests te)
 
-# import and add gtest
-enable_testing()
-
-find_package(GTest REQUIRED)
-include_directories(${GTEST_INCLUDE_DIRS})
-target_link_libraries(unit_tests ${GTEST_BOTH_LIBRARIES})
-
-if(CMAKE_COMPILER_IS_GNUCXX)
+# add pthread needed by google test
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 target_link_libraries(unit_tests Threads::Threads)
-endif()
 
+# import and add gtest
+enable_testing()
+find_package(GTest REQUIRED)
+include_directories(${GTEST_INCLUDE_DIRS})
+target_link_libraries(unit_tests ${GTEST_BOTH_LIBRARIES})
 add_test(AllTests unit_tests)
