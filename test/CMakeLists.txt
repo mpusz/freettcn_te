@@ -21,7 +21,6 @@ get_target_property(TE_INCLUDES te INCLUDE_DIRECTORIES)
 include_directories(${TE_INCLUDES})
 
 add_executable(unit_tests ${SOURCE_FILES})
-set_property(TARGET unit_tests PROPERTY CXX_STANDARD 14)
 target_link_libraries(unit_tests te)
 
 # add pthread needed by google test

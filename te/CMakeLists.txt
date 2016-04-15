@@ -21,4 +21,3 @@ add_library(te ${SOURCE_FILES})
 target_include_directories(te
         PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
         PUBLIC ./include)
-set_property(TARGET te PROPERTY CXX_STANDARD 14)
