@@ -9,7 +9,7 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-5
-      env: C_COMPILER=gcc-5 CXX_COMPILER=g++-5 UNIT_TESTS=true
+      env: C_COMPILER=gcc-5 CXX_COMPILER=g++-5 UNIT_TESTS=true CODECOV=true
 
     - compiler: clang
       addons:
@@ -19,7 +19,7 @@ matrix:
             - llvm-toolchain-precise-3.8
           packages:
             - clang-3.8
-      env: C_COMPILER=clang-3.8 CXX_COMPILER=clang++-3.8 UNIT_TESTS=true
+      env: C_COMPILER=clang-3.8 CXX_COMPILER=clang++-3.8 UNIT_TESTS=true CODECOV=false
 
 install:
   ############################################################################
@@ -50,14 +50,15 @@ install:
   - sudo apt-get install -y libgtest-dev
   - cd /usr/src/gtest && sudo cmake -DCMAKE_C_COMPILER=${C_COMPILER} -DCMAKE_CXX_COMPILER=${CXX_COMPILER} . && sudo cmake --build . && sudo mv libg* /usr/local/lib/ ; cd -
 
-#  - sudo pip install cpp-coveralls
-
 before_script:
   ############################################################################
   # Setup the build directory
   ############################################################################
   - cd ${TRAVIS_BUILD_DIR}
-  - mkdir build && cd build && cmake -DCMAKE_C_COMPILER=${C_COMPILER} -DCMAKE_CXX_COMPILER=${CXX_COMPILER} ..
+  - if [[ "${CODECOV}" == "true" ]]; then
+      CMAKE_CODECOV=-DCMAKE_CXX_FLAGS=-coverage
+    fi
+  - mkdir build && cd build && cmake -DCMAKE_C_COMPILER=${C_COMPILER} -DCMAKE_CXX_COMPILER=${CXX_COMPILER} ${CMAKE_CODECOV} ..
 
 script:
   - cmake --build .
@@ -66,5 +67,5 @@ script:
       test/unit_tests
     fi
 
-#after_success:
-#  - coveralls --root .. -E ".*external.*" -E ".*CMakeFiles.*" -E ".*test/.*.cpp.*"
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
