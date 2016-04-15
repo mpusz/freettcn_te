@@ -1,5 +1,10 @@
 language: cpp
 
+addons:
+  apt:
+    packages:
+      - libgtest-dev
+
 matrix:
   include:
     - compiler: gcc
@@ -22,10 +27,6 @@ matrix:
       env: UNIT_TESTS=true COMPILER=clang++-3.8
 
 install:
-  - sudo apt-get update -qq
-  - sudo apt-get install -y libgtest-dev
-  - "cd /usr/src/gtest && sudo cmake . && sudo cmake --build . && sudo mv libg* /usr/local/lib/ ; cd -"
-
   ############################################################################
   # All the dependencies are installed in ${TRAVIS_BUILD_DIR}/deps/
   ############################################################################
@@ -43,6 +44,18 @@ install:
     else
       brew install cmake
     fi
+
+  ############################################################################
+  # Get GTest
+  ############################################################################
+#  - |
+#    GTEST_URL="https://github.com/google/googletest/archive/release-1.7.0.tar.gz"
+#    mkdir googletest && travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C cmake
+#    export PATH=${DEPS_DIR}/cmake/bin:${PATH}
+  - cd /usr/src/gtest && sudo cmake . && sudo cmake --build . && sudo mv libg* /usr/local/lib/ ; cd -
+  - ls /usr/local/lib/libgtest*
+  - ls /usr/include/gtest
+
 #  - sudo pip install cpp-coveralls
 
 before_script:
@@ -50,7 +63,7 @@ before_script:
   # Setup the build directory
   ############################################################################
   - cd ${TRAVIS_BUILD_DIR}
-  - mkdir build && cd build && cmake .. -DCMAKE_CXX_COMPILER=${COMPILER}
+  - mkdir build && cd build && cmake --trace-expand .. -DCMAKE_CXX_COMPILER=${COMPILER}
 
 script:
   - cmake --build .
