@@ -9,7 +9,7 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-5
-      env: UNIT_TESTS=true COMPILER=gcc-5
+      env: C_COMPILER=gcc-5 CXX_COMPILER=g++-5 UNIT_TESTS=true
 
     - compiler: clang
       addons:
@@ -19,7 +19,7 @@ matrix:
             - llvm-toolchain-precise-3.8
           packages:
             - clang-3.8
-      env: UNIT_TESTS=true COMPILER=clang-3.8
+      env: C_COMPILER=clang-3.8 CXX_COMPILER=clang++-3.8 UNIT_TESTS=true
 
 install:
   ############################################################################
@@ -48,7 +48,7 @@ install:
 #    mkdir googletest && travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C cmake
 #    export PATH=${DEPS_DIR}/cmake/bin:${PATH}
   - sudo apt-get install -y libgtest-dev
-  - cd /usr/src/gtest && sudo cmake -DCMAKE_C_COMPILER=${COMPILER} -DCMAKE_CXX_COMPILER=${COMPILER} . && sudo cmake --build . && sudo mv libg* /usr/local/lib/ ; cd -
+  - cd /usr/src/gtest && sudo cmake -DCMAKE_C_COMPILER=${C_COMPILER} -DCMAKE_CXX_COMPILER=${CXX_COMPILER} . && sudo cmake --build . && sudo mv libg* /usr/local/lib/ ; cd -
 
 #  - sudo pip install cpp-coveralls
 
@@ -57,7 +57,7 @@ before_script:
   # Setup the build directory
   ############################################################################
   - cd ${TRAVIS_BUILD_DIR}
-  - mkdir build && cd build && cmake -DCMAKE_C_COMPILER=${COMPILER} -DCMAKE_CXX_COMPILER=${COMPILER} ..
+  - mkdir build && cd build && cmake -DCMAKE_C_COMPILER=${C_COMPILER} -DCMAKE_CXX_COMPILER=${CXX_COMPILER} ..
 
 script:
   - cmake --build .
