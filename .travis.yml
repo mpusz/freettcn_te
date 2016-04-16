@@ -9,7 +9,7 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-5
-      env: C_COMPILER=gcc-5 CXX_COMPILER=g++-5 UNIT_TESTS=true CODECOV=false
+      env: C_COMPILER=gcc-5 CXX_COMPILER=g++-5 UNIT_TESTS=true CODECOV=true
 
     - compiler: clang
       addons:
@@ -19,7 +19,7 @@ matrix:
             - llvm-toolchain-precise-3.8
           packages:
             - clang-3.8
-      env: C_COMPILER=clang-3.8 CXX_COMPILER=clang++-3.8 UNIT_TESTS=true CODECOV=true
+      env: C_COMPILER=clang-3.8 CXX_COMPILER=clang++-3.8 UNIT_TESTS=true CODECOV=false
 
 install:
   ############################################################################
@@ -72,6 +72,5 @@ script:
 after_success:
   - |
     if [[ "${CODECOV}" == "true" ]]; then
-      find .
-      bash <(curl -s https://codecov.io/bash) -v
+      bash <(curl -s https://codecov.io/bash) -x gcov-5
     fi
