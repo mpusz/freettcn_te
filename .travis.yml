@@ -72,5 +72,6 @@ script:
 after_success:
   - |
     if [[ "${CODECOV}" == "true" ]]; then
+      find .
       bash <(curl -s https://codecov.io/bash) -v
     fi
