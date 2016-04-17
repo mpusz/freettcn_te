@@ -17,20 +17,12 @@
 
 set(SOURCE_FILES test_te.cpp)
 
-get_target_property(TE_INCLUDES te INCLUDE_DIRECTORIES)
-include_directories(${TE_INCLUDES})
+# Unit Tests need access to private implementation interface in order to test it
+get_target_property(TE_INCLUDE_DIRS freettcn::te INCLUDE_DIRECTORIES)
+include_directories(${TE_INCLUDE_DIRS} ${GTEST_INCLUDE_DIRS})
 
-add_executable(unit_tests ${SOURCE_FILES})
-target_link_libraries(unit_tests te)
-
-# add pthread needed by google test
-set(THREADS_PREFER_PTHREAD_FLAG ON)
-find_package(Threads REQUIRED)
-target_link_libraries(unit_tests Threads::Threads)
-
-# import and add gtest
-enable_testing()
-find_package(GTest REQUIRED)
-include_directories(${GTEST_INCLUDE_DIRS})
-target_link_libraries(unit_tests ${GTEST_BOTH_LIBRARIES})
-add_test(AllTests unit_tests)
+add_executable(te_tests ${SOURCE_FILES})
+target_link_libraries(te_tests 
+        freettcn::te
+        Threads::Threads ${GTEST_BOTH_LIBRARIES})
+add_test(te_tests te_tests)

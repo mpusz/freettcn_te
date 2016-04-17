@@ -15,9 +15,26 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-set(SOURCE_FILES src/basic.cpp)
-add_library(te ${SOURCE_FILES})
+cmake_minimum_required(VERSION 3.2)
+project(te C CXX)
 
-target_include_directories(te
-        PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
-        PUBLIC ./include)
+set(SOURCE_FILES src/basic.cpp)
+
+add_library(te ${SOURCE_FILES})
+add_library(freettcn::te ALIAS te)
+
+target_include_directories(te PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
+        PRIVATE src)
+
+install(TARGETS te
+        ARCHIVE  DESTINATION lib
+        LIBRARY  DESTINATION lib
+        RUNTIME  DESTINATION bin)  # This is for Windows
+install(DIRECTORY include/ DESTINATION include)
+ 
+# This makes the project importable from the build directory
+export(TARGETS glfw te FILE CoreConfig.cmake)
+
+add_subdirectory(tests)

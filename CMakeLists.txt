@@ -18,6 +18,11 @@
 cmake_minimum_required(VERSION 3.2)
 project(freettcn_te C CXX)
 
+enable_testing()
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
+find_package(GTest REQUIRED)
+
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED on)
 
@@ -41,4 +46,3 @@ elseif(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
 endif()
 
 add_subdirectory(te)
-add_subdirectory(test)
