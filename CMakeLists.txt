@@ -18,31 +18,25 @@
 cmake_minimum_required(VERSION 3.2)
 project(freettcn_te C CXX)
 
-enable_testing()
+# define options
+#option(CODE_COVERAGE "Compile project for C++ code coverage" OFF)
+#option(TOOLCHAIN)
+
+# add GoogleTest target
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 find_package(GTest REQUIRED)
+add_library(GoogleTest INTERFACE IMPORTED)
+set_property(TARGET GoogleTest PROPERTY
+        INTERFACE_INCLUDE_DIRECTORIES ${GTEST_INCLUDE_DIRS})
+set_property(TARGET GoogleTest PROPERTY
+        INTERFACE_LINK_LIBRARIES Threads::Threads ${GTEST_BOTH_LIBRARIES})
 
-set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_STANDARD_REQUIRED on)
+# add GSL target
+add_subdirectory(src/external/GSL EXCLUDE_FROM_ALL)
 
-if(MSVC)
-    # set warnings
-    if(CMAKE_CXX_FLAGS MATCHES "/W[0-4]")
-        string(REGEX REPLACE "/W[0-4]" "/W4" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-    else()
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
-    endif()
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /w44062 /w44263 /w44266 /w44640")
+# compilers-specific configuration
+include(cmake/compilers.cmake)
 
-    # treat warnings as errors
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /WX")
-elseif(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
-    # set warnings
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -pedantic")
-
-    # treat warnings as errors
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror")
-endif()
-
-add_subdirectory(te)
+# add freettcn code
+add_subdirectory(src/te)

@@ -48,7 +48,7 @@ install:
 #    mkdir googletest && travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-com ponents=1 -xz -C cmake
 #    export PATH=${DEPS_DIR}/cmake/bin:${PATH}
   - sudo apt-get install -y libgtest-dev
-  - cd /usr/src/gtest && sudo cmake -DCMAKE_C_COMPILER=${C_COMPILER} -DCMAKE_CXX_COMPILER=${CXX_COMPILER} . && sudo cmake --build . && sudo mv libg* /usr/local/lib/ ; cd -
+  - cd /usr/src/gtest && mkdir lib && cd lib && sudo cmake -DCMAKE_C_COMPILER=${C_COMPILER} -DCMAKE_CXX_COMPILER=${CXX_COMPILER} .. && sudo cmake --build . ; cd -
 
 before_script:
   ############################################################################
@@ -59,7 +59,7 @@ before_script:
     if [[ "${CODECOV}" == "true" ]]; then
       CMAKE_CODECOV=-DCMAKE_CXX_FLAGS=-coverage
     fi
-  - mkdir build && cd build && cmake -DCMAKE_C_COMPILER=${C_COMPILER} -DCMAKE_CXX_COMPILER=${CXX_COMPILER} ${CMAKE_CODECOV} ../src
+  - mkdir build && cd build && cmake -DCMAKE_C_COMPILER=${C_COMPILER} -DCMAKE_CXX_COMPILER=${CXX_COMPILER} -DGTEST_ROOT=/usr/src/gtest ${CMAKE_CODECOV} ../src
 
 script:
   - cmake --build .

@@ -18,6 +18,9 @@
 cmake_minimum_required(VERSION 3.2)
 project(te C CXX)
 
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED on)
+
 set(SOURCE_FILES src/basic.cpp)
 
 add_library(te ${SOURCE_FILES})

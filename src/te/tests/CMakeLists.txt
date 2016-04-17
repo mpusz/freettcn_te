@@ -19,10 +19,8 @@ set(SOURCE_FILES test_te.cpp)
 
 # Unit Tests need access to private implementation interface in order to test it
 get_target_property(TE_INCLUDE_DIRS freettcn::te INCLUDE_DIRECTORIES)
-include_directories(${TE_INCLUDE_DIRS} ${GTEST_INCLUDE_DIRS})
+include_directories(${TE_INCLUDE_DIRS})
 
 add_executable(te_tests ${SOURCE_FILES})
-target_link_libraries(te_tests 
-        freettcn::te
-        Threads::Threads ${GTEST_BOTH_LIBRARIES})
+target_link_libraries(te_tests freettcn::te GoogleTest)
 add_test(te_tests te_tests)
