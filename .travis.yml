@@ -65,7 +65,7 @@ script:
   - cmake --build .
   - |
     if [[ "${UNIT_TESTS}" == "true" ]]; then
-      te/tests/te_tests
+      src/te/tests/te_tests
     fi
 
 after_success:
