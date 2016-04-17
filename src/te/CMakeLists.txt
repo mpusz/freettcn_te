@@ -32,9 +32,9 @@ install(TARGETS te
         ARCHIVE  DESTINATION lib
         LIBRARY  DESTINATION lib
         RUNTIME  DESTINATION bin)  # This is for Windows
-install(DIRECTORY include/ DESTINATION include)
+install(DIRECTORY include DESTINATION include)
  
 # This makes the project importable from the build directory
-export(TARGETS glfw te FILE CoreConfig.cmake)
+#export(TARGETS glfw te FILE CoreConfig.cmake)
 
 add_subdirectory(tests)

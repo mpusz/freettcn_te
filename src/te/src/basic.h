@@ -17,7 +17,7 @@
 
 #pragma once
 
-#include "types.h"
+#include "freettcn/types.h"
 #include <cassert>
 #include <cstdint>
 #include <limits>

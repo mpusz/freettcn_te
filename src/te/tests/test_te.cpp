@@ -21,8 +21,8 @@
 
 using namespace freettcn;
 
-TEST(SimpleBasicTypesAndValues, floatNotANumber) { ASSERT_TRUE(std::isnan(not_a_number)); }
-TEST(SimpleBasicTypesAndValues, floatInfinity) { ASSERT_TRUE(std::isinf(infinity)); }
+TEST(SimpleBasicTypesAndValues, floatNotANumber) { ASSERT_EQ(true, std::isnan(not_a_number)); }
+TEST(SimpleBasicTypesAndValues, floatInfinity) { ASSERT_EQ(true, std::isinf(infinity)); }
 
 TEST(BasicStringTypesAndValues, bitstringExample1)
 {
