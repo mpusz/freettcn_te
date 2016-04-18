@@ -20,6 +20,7 @@ project(freettcn_te C CXX)
 
 # add dependencies
 add_subdirectory(src/external/googletest EXCLUDE_FROM_ALL)
+target_include_directories(gtest_main INTERFACE src/external/googletest/include)
 add_subdirectory(src/external/GSL EXCLUDE_FROM_ALL)
 
 # compilers-specific configuration
