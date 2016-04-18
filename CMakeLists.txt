@@ -18,17 +18,8 @@
 cmake_minimum_required(VERSION 3.2)
 project(freettcn_te C CXX)
 
-# add GoogleTest target
-set(THREADS_PREFER_PTHREAD_FLAG ON)
-find_package(Threads REQUIRED)
-find_package(GTest REQUIRED)
-add_library(GoogleTest INTERFACE IMPORTED)
-set_property(TARGET GoogleTest PROPERTY
-        INTERFACE_INCLUDE_DIRECTORIES ${GTEST_INCLUDE_DIRS})
-set_property(TARGET GoogleTest PROPERTY
-        INTERFACE_LINK_LIBRARIES Threads::Threads ${GTEST_BOTH_LIBRARIES})
-
-# add GSL target
+# add dependencies
+add_subdirectory(src/external/googletest EXCLUDE_FROM_ALL)
 add_subdirectory(src/external/GSL EXCLUDE_FROM_ALL)
 
 # compilers-specific configuration

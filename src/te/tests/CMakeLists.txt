@@ -22,5 +22,5 @@ get_target_property(TE_INCLUDE_DIRS freettcn::te INCLUDE_DIRECTORIES)
 include_directories(${TE_INCLUDE_DIRS})
 
 add_executable(te_tests ${SOURCE_FILES})
-target_link_libraries(te_tests freettcn::te GoogleTest)
+target_link_libraries(te_tests freettcn::te gtest_main)
 add_test(te_tests te_tests)

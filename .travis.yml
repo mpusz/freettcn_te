@@ -1,17 +1,19 @@
 language: cpp
+sudo: false
 
 matrix:
   include:
-    - compiler: gcc
+    - env: C_COMPILER=gcc-5 CXX_COMPILER=g++-5 UNIT_TESTS=ON CODECOV=ON
+      compiler: gcc
       addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
           packages:
             - g++-5
-      env: C_COMPILER=gcc-5 CXX_COMPILER=g++-5 UNIT_TESTS=ON CODECOV=ON
 
-    - compiler: clang
+    - env: C_COMPILER=clang-3.8 CXX_COMPILER=clang++-3.8 UNIT_TESTS=ON CODECOV=OFF
+      compiler: clang
       addons:
         apt:
           sources:
@@ -19,7 +21,6 @@ matrix:
             - llvm-toolchain-precise-3.8
           packages:
             - clang-3.8
-      env: C_COMPILER=clang-3.8 CXX_COMPILER=clang++-3.8 UNIT_TESTS=ON CODECOV=OFF
 
 install:
   ############################################################################
@@ -39,16 +40,6 @@ install:
     else
       brew install cmake
     fi
-
-  ############################################################################
-  # Get GTest
-  ############################################################################
-#  - |
-#    GTEST_URL="https://github.com/google/googletest/archive/release-1.7.0.tar.gz"
-#    mkdir googletest && travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-com ponents=1 -xz -C cmake
-#    export PATH=${DEPS_DIR}/cmake/bin:${PATH}
-  - sudo apt-get install -y libgtest-dev
-  - sudo mkdir /usr/src/gtest/lib && cd /usr/src/gtest/lib && sudo cmake -DCMAKE_C_COMPILER=${C_COMPILER} -DCMAKE_CXX_COMPILER=${CXX_COMPILER} .. && sudo cmake --build . ; cd -
 
 before_script:
   ############################################################################
