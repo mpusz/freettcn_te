@@ -47,7 +47,7 @@ bitstring_t operator"" _B(const char* txt, std::size_t len)
   bitstring_t str;
   str.reserve(len);
   for(auto i = 0U; i < len; ++i) {
-    str.push_back(static_cast<bool>(txt[i] - 48));
+    str.push_back(txt[i] - 48 != 0);
   }
   return str;
 }
