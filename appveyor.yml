@@ -1,0 +1,33 @@
+version: 1.0.{build}
+
+branches:
+  except:
+    - gh-pages
+
+skip_commits:
+  message: /[ci skip]/
+
+init:
+  - git config --global core.autocrlf input
+
+clone_depth: 5
+  
+platform:
+  - x64
+ 
+configuration:
+  - Release
+
+before_build:
+  - mkdir build && cd build
+  - cmake ..
+
+build:
+  parallel: true
+  project: ($env:APPVEYOR_BUILD_FOLDER)\build\freettcn_te.sln
+
+test_script:
+  - cmd: ($env:APPVEYOR_BUILD_FOLDER)\build\src\te\tests\Release\te_tests.exe --gtest_output=xml:te_tests.xml
+
+on_finish:
+  - ps: (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\te_tests.xml))

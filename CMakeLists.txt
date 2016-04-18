@@ -19,6 +19,7 @@ cmake_minimum_required(VERSION 3.2)
 project(freettcn_te C CXX)
 
 # add dependencies
+set(gtest_force_shared_crt ON CACHE BOOL "Use shared (DLL) run-time lib even when Google Test is built as static lib.")
 add_subdirectory(src/external/googletest EXCLUDE_FROM_ALL)
 target_include_directories(gtest_main PUBLIC src/external/googletest/include)
 add_subdirectory(src/external/GSL EXCLUDE_FROM_ALL)
