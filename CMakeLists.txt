@@ -18,10 +18,6 @@
 cmake_minimum_required(VERSION 3.2)
 project(freettcn_te C CXX)
 
-# define options
-#option(CODE_COVERAGE "Compile project for C++ code coverage" OFF)
-#option(TOOLCHAIN)
-
 # add GoogleTest target
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
@@ -36,7 +32,7 @@ set_property(TARGET GoogleTest PROPERTY
 add_subdirectory(src/external/GSL EXCLUDE_FROM_ALL)
 
 # compilers-specific configuration
-include(cmake/compilers.cmake)
+include(cmake/compilers.cmake OPTIONAL)
 
 # add freettcn code
 add_subdirectory(src/te)

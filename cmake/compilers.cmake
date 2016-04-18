@@ -15,6 +15,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# define options
+option(CODE_COVERAGE "Compile project for C++ code coverage" OFF)
+#option(TOOLCHAIN)
+
 # configure compiler warning level
 if(MSVC)
     # set warnings
@@ -33,4 +37,13 @@ elseif(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
 
     # treat warnings as errors
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror")
+endif()
+
+# enable Code Coverage
+if(CODE_COVERAGE)
+    if(MSVC)
+        message(WARNING "Code Coverage on Visual Studio not supported")
+    elseif(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -coverage")
+    endif()
 endif()

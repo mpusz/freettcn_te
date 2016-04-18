@@ -9,7 +9,7 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-5
-      env: C_COMPILER=gcc-5 CXX_COMPILER=g++-5 UNIT_TESTS=true CODECOV=true
+      env: C_COMPILER=gcc-5 CXX_COMPILER=g++-5 UNIT_TESTS=ON CODECOV=ON
 
     - compiler: clang
       addons:
@@ -19,7 +19,7 @@ matrix:
             - llvm-toolchain-precise-3.8
           packages:
             - clang-3.8
-      env: C_COMPILER=clang-3.8 CXX_COMPILER=clang++-3.8 UNIT_TESTS=true CODECOV=false
+      env: C_COMPILER=clang-3.8 CXX_COMPILER=clang++-3.8 UNIT_TESTS=ON CODECOV=OFF
 
 install:
   ############################################################################
@@ -55,21 +55,17 @@ before_script:
   # Setup the build directory
   ############################################################################
   - cd ${TRAVIS_BUILD_DIR}
-  - |
-    if [[ "${CODECOV}" == "true" ]]; then
-      CMAKE_CODECOV=-DCMAKE_CXX_FLAGS=-coverage
-    fi
-  - mkdir build && cd build && cmake -DCMAKE_C_COMPILER=${C_COMPILER} -DCMAKE_CXX_COMPILER=${CXX_COMPILER} -DGTEST_ROOT=/usr/src/gtest ${CMAKE_CODECOV} ..
+  - mkdir build && cd build && cmake -DCMAKE_C_COMPILER=${C_COMPILER} -DCMAKE_CXX_COMPILER=${CXX_COMPILER} -DCODE_COVERAGE={CODECOV} -DGTEST_ROOT=/usr/src/gtest ..
 
 script:
   - cmake --build .
   - |
-    if [[ "${UNIT_TESTS}" == "true" ]]; then
+    if [[ "${UNIT_TESTS}" == "ON" ]]; then
       src/te/tests/te_tests
     fi
 
 after_success:
   - |
-    if [[ "${CODECOV}" == "true" ]]; then
+    if [[ "${CODECOV}" == "ON" ]]; then
       bash <(curl -s https://codecov.io/bash) -x gcov-5
     fi
