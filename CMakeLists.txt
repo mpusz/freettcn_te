@@ -20,11 +20,16 @@ project(freettcn_te C CXX)
 
 # add dependencies
 add_subdirectory(src/external/googletest EXCLUDE_FROM_ALL)
-target_include_directories(gtest_main INTERFACE src/external/googletest/include)
+target_include_directories(gtest_main PUBLIC src/external/googletest/include)
 add_subdirectory(src/external/GSL EXCLUDE_FROM_ALL)
 
 # compilers-specific configuration
 include(cmake/compilers.cmake OPTIONAL)
 
-# add freettcn code
+# add freettcn modules
 add_subdirectory(src/te)
+
+# install freettcn modules
+install(EXPORT freettcn DESTINATION lib/freettcn
+        NAMESPACE freettcn::
+        CONFIGURATIONS Release)

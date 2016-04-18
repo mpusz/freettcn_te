@@ -31,13 +31,11 @@ target_include_directories(te PUBLIC
         $<INSTALL_INTERFACE:include>
         PRIVATE src)
 
-install(TARGETS te
-        ARCHIVE  DESTINATION lib
-        LIBRARY  DESTINATION lib
-        RUNTIME  DESTINATION bin)  # This is for Windows
-install(DIRECTORY include DESTINATION include)
- 
-# This makes the project importable from the build directory
-#export(TARGETS glfw te FILE CoreConfig.cmake)
+install(TARGETS te EXPORT freettcn
+        ARCHIVE DESTINATION lib/freettcn/lib CONFIGURATIONS Release
+        LIBRARY DESTINATION lib/freettcn/lib CONFIGURATIONS Release
+        RUNTIME DESTINATION lib/freettcn/bin CONFIGURATIONS Release)
+install(DIRECTORY include/freettcn DESTINATION include
+        CONFIGURATIONS Release)
 
 add_subdirectory(tests)
