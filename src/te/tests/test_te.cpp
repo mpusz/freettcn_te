@@ -58,7 +58,7 @@ TEST(BasicStringTypesAndValues, charstringExample4)
   ASSERT_EQ(exp, "\"ab\"cd\""_ch);
 }
 
-TEST(BasicStringTypesAndValues, char) { ASSERT_EQ('\U171', get_char(0, 0, 1, 113)); }
+TEST(BasicStringTypesAndValues, char) { ASSERT_EQ(U'\u0171', get_char(0, 0, 1, 113)); }
 
 TEST(BasicStringTypesAndValues, universalCharstringExample5)
 {
