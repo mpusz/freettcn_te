@@ -27,8 +27,7 @@ before_build:
 
 build:
   parallel: true
-#  project: ($env:APPVEYOR_BUILD_FOLDER)\build\freettcn_te.sln
-  project: freettcn_te.sln
+  project: ($env:APPVEYOR_BUILD_FOLDER)\build\freettcn_te.sln
 
 #test_script:
 #  - cmd: ($env:APPVEYOR_BUILD_FOLDER)\build\src\te\tests\Release\te_tests.exe --gtest_output=xml:te_tests.xml
