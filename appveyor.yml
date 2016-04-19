@@ -1,11 +1,11 @@
 version: 1.0.{build}
 
-branches:
-  except:
-    - gh-pages
-
-skip_commits:
-  message: /[ci skip]/
+#branches:
+#  except:
+#    - gh-pages
+#
+#skip_commits:
+#  message: /[ci skip]/
 
 init:
   - git config --global core.autocrlf input
@@ -24,10 +24,11 @@ before_build:
 
 build:
   parallel: true
-  project: ($env:APPVEYOR_BUILD_FOLDER)\build\freettcn_te.sln
+#  project: ($env:APPVEYOR_BUILD_FOLDER)\build\freettcn_te.sln
+  project: freettcn_te.sln
 
-test_script:
-  - cmd: ($env:APPVEYOR_BUILD_FOLDER)\build\src\te\tests\Release\te_tests.exe --gtest_output=xml:te_tests.xml
-
-on_finish:
-  - ps: (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\te_tests.xml))
+#test_script:
+#  - cmd: ($env:APPVEYOR_BUILD_FOLDER)\build\src\te\tests\Release\te_tests.exe --gtest_output=xml:te_tests.xml
+#
+#on_finish:
+#  - ps: (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\te_tests.xml))
