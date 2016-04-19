@@ -7,17 +7,20 @@ version: 1.0.{build}
 #skip_commits:
 #  message: /[ci skip]/
 
-init:
-  - git config --global core.autocrlf input
-
-clone_depth: 5
-  
 platform:
   - x64
  
 configuration:
   - Release
 
+init:
+  - git config --global core.autocrlf input
+
+clone_depth: 5
+  
+install:
+  - git submodule update --init --recursive
+  
 before_build:
   - mkdir build && cd build
   - cmake -G"Visual Studio 14 2015 Win64" ..
