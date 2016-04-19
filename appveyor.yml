@@ -30,7 +30,7 @@ build:
   project: $(APPVEYOR_BUILD_FOLDER)\build\freettcn_te.sln
 
 test_script:
-  - cmd: %APPVEYOR_BUILD_FOLDER%\build\src\te\tests\Release\te_tests.exe --gtest_output=xml:te_tests.xml
+  - ps: $($env:APPVEYOR_BUILD_FOLDER)\build\src\te\tests\Release\te_tests.exe --gtest_output=xml:te_tests.xml
 
 on_finish:
   - ps: (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\te_tests.xml))
