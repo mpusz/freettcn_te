@@ -1,11 +1,11 @@
 version: 1.0.{build}
 
-#branches:
-#  except:
-#    - gh-pages
-#
-#skip_commits:
-#  message: /[ci skip]/
+branches:
+  except:
+    - gh-pages
+
+skip_commits:
+  message: /\[ci skip\]/
 
 platform:
   - x64
