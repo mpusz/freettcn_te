@@ -25,7 +25,7 @@ target_include_directories(gtest_main PUBLIC src/external/googletest/include)
 add_subdirectory(src/external/GSL EXCLUDE_FROM_ALL)
 
 # compilers-specific configuration
-include(cmake/compilers.cmake OPTIONAL)
+include(cmake/compile_warnings.cmake OPTIONAL)
 
 # add freettcn modules
 add_subdirectory(src/te)
