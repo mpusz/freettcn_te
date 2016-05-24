@@ -18,6 +18,11 @@
 cmake_minimum_required(VERSION 3.2)
 project(freettcn_te C CXX)
 
+# The project version number.
+set(VERSION_MAJOR 0 CACHE STRING "Project major version number.")
+set(VERSION_MINOR 0 CACHE STRING "Project minor version number.")
+set(VERSION_PATCH 1 CACHE STRING "Project patch version number.")
+
 # add dependencies
 set(gtest_force_shared_crt ON CACHE BOOL "Use shared (DLL) run-time lib even when Google Test is built as static lib.")
 add_subdirectory(src/external/googletest EXCLUDE_FROM_ALL)
@@ -34,3 +39,5 @@ add_subdirectory(src/te)
 install(EXPORT freettcn DESTINATION lib/freettcn
         NAMESPACE freettcn::
         CONFIGURATIONS Release)
+
+add_subdirectory(doc)
