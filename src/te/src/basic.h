@@ -18,10 +18,17 @@
 #pragma once
 
 #include "freettcn/types.h"
+#include "gsl.h"
 #include <cassert>
 #include <cstdint>
 #include <limits>
 #include <vector>
+
+namespace gsl {
+
+template <std::ptrdiff_t Extent = dynamic_range>
+using cu32zstring = basic_zstring<const char32_t, Extent>;
+}
 
 namespace freettcn {
 
@@ -42,7 +49,7 @@ constexpr float_t infinity = std::numeric_limits<float_t>::infinity();
 
 using bitstring_t = std::vector<bool>;
 
-bitstring_t operator"" _B(const char* txt, std::size_t len)
+inline bitstring_t operator"" _B(gsl::czstring<> txt, std::size_t len)
 {
   bitstring_t str;
   str.reserve(len);
@@ -54,54 +61,49 @@ bitstring_t operator"" _B(const char* txt, std::size_t len)
 
 using hexstring_t = std::vector<std::uint8_t>;
 
-hexstring_t operator"" _H(const char* txt, std::size_t len)
+inline hexstring_t operator"" _H(gsl::czstring<> txt, std::size_t len)
 {
   hexstring_t str;
   str.reserve(len);
   for(auto i = 0U; i < len; ++i) {
     char substr[] = {txt[i], '\0'};
-    str.push_back(static_cast<std::uint8_t>(std::stoul(substr, nullptr, 16)));
+    str.push_back(static_cast<std::uint8_t>(std::stoul(&substr[0], nullptr, 16)));
   }
   return str;
 }
 
 using octetstring_t = std::vector<std::uint8_t>;
 
-octetstring_t operator"" _O(const char* txt, std::size_t len)
+inline octetstring_t operator"" _O(gsl::czstring<> txt, std::size_t len)
 {
   assert(len % 2 == 0);
   octetstring_t str;
   str.reserve(len / 2);
   for(auto i = 0U; i < len / 2; ++i) {
     char substr[] = {txt[2 * i], txt[2 * i + 1], '\0'};
-    str.push_back(static_cast<std::uint8_t>(std::stoul(substr, nullptr, 16)));
+    str.push_back(static_cast<std::uint8_t>(std::stoul(&substr[0], nullptr, 16)));
   }
   return str;
 }
 
 using charstring_t = std::string;
 
-charstring_t operator"" _ch(const char* txt, std::size_t len) { return charstring_t{txt, len}; }
+inline charstring_t operator"" _ch(gsl::czstring<> txt, std::size_t len) { return charstring_t{txt, len}; }
 
-char32_t get_char(int group, int plane, int row, int cell)
+inline char32_t get_char(int group, int plane, int row, int cell)
 {
   return static_cast<char32_t>((group << 24) + (plane << 16) + (row << 8) + cell);
 }
 
 using universal_charstring_t = std::u32string;
 
-universal_charstring_t operator"" _u_ch(const char32_t* txt, std::size_t len)
+inline universal_charstring_t operator"" _u_ch(gsl::cu32zstring<> txt, std::size_t len)
 {
   return universal_charstring_t{txt, len};
 }
 
-template<class... T>
+template <class... T>
 class subtype_list {
-
 };
 
-
-
-
-
-}
+}  // namespace freettcn

@@ -20,9 +20,9 @@
 #include <string>
 
 using Tboolean = bool;
-using Tinteger = long int;
-using Tsize = unsigned long int;
-using Tindex = unsigned long int;
+using Tinteger = long int;         // NOLINT
+using Tsize = unsigned long int;   // NOLINT
+using Tindex = unsigned long int;  // NOLINT
 using Tfloat = double;
 using Tstring = std::string;
 using TuniversalString = std::wstring;

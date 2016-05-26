@@ -74,23 +74,23 @@ TEST(DISABLED_BasicStringTypesAndValues, universalCharstringExample6)
 
 TEST(DISABLED_AccessingIndividualStringElements, Example1)
 {
-  auto MyBitString = "11110111"_B;
-  //  MyBitString[4] = "1"_B;
-  ASSERT_EQ("11111111"_B, MyBitString);
+  auto my_bit_string = "11110111"_B;
+  //  my_bit_string[4] = "1"_B;
+  ASSERT_EQ("11111111"_B, my_bit_string);
 }
 
 TEST(DISABLED_AccessingIndividualStringElements, Example2)
 {
-  bitstring_t MyBitStringA, MyBitStringB, MyBitStringC;
-  MyBitStringA = "010"_B;
-  //  MyBitStringA[1] = "11"_B; //causes an error as only individual elements can be accessed
+  bitstring_t my_bitstring_a, my_bitstring_b, my_bitstring_c;
+  my_bitstring_a = "010"_B;
+  //  my_bitstring_a[1] = "11"_B; //causes an error as only individual elements can be accessed
 
-  MyBitStringB = "1"_B;
-  //  MyBitStringB[4] = "1"_B; //causes an error as the index is larger than the length of the lhs
+  my_bitstring_b = "1"_B;
+  //  my_bitstring_b[4] = "1"_B; //causes an error as the index is larger than the length of the lhs
 
-  MyBitStringC = ""_B;
-  //  MyBitStringC[0] = "1"_B; // value of MyBitStringC is '1'B
-  ASSERT_EQ("1"_B, MyBitStringC);
-  //  MyBitStringC[1] = "0"_B; // value of MyBitStringC is '10'B
-  ASSERT_EQ("10"_B, MyBitStringC);
+  my_bitstring_c = ""_B;
+  //  my_bitstring_c[0] = "1"_B; // value of my_bitstring_c is '1'B
+  ASSERT_EQ("1"_B, my_bitstring_c);
+  //  my_bitstring_c[1] = "0"_B; // value of my_bitstring_c is '10'B
+  ASSERT_EQ("10"_B, my_bitstring_c);
 }
