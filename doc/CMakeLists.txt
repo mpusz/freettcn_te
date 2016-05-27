@@ -34,7 +34,6 @@ if(BUILD_DOCUMENTATION)
     set(DOXYFILE ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
     configure_file(${DOXYFILE_IN} ${DOXYFILE} @ONLY)
 
-    message("Doxygen build started.")
     add_custom_target(doc
             COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYFILE}
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
